@@ -1,7 +1,8 @@
 import catchAsync from "../../utils/catchAsync"
 import sendResponse from "../../utils/sendResponse"
-import { authServices } from "./auth.service";
+
 import status from "http-status";
+import { authServices } from "./auth.services";
 // register a user
 const registerNewUser = catchAsync(async (req, res) => {
     const result = await authServices.registerUserIntoDB(req.body);

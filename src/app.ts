@@ -1,31 +1,36 @@
-import cookieParser from 'cookie-parser';
-import cors from 'cors';
 import express, { Application, Request, Response } from 'express';
-import globalErrorHandler from './app/middlewares/globalErrorhandler';
-import notFound from './app/middlewares/notFound';
 
-import sendResponse from './app/utils/sendResponse';
+
+import cors from 'cors';
 import router from './app/routes';
-
+import notFound from './app/middlewares/notFound';
+import globalErrorHandler from './app/middlewares/globalErrorhandler';
 const app: Application = express();
+//Middleware to parse incoming JSON request
+app.use(express.json());
+app.use(
+  cors({
+    origin: [
+      'http://localhost:3000',
+      'https://portfolio-client-mocha.vercel.app',
+    ],
+  }),
+);
 
-app.use(express.json({ limit: '50mb' }));
-app.use(express.urlencoded({ extended: true, limit: '50mb' }));
-app.use(cookieParser());
-app.use(cors({ origin: ['http://localhost:5173'], credentials: true }));
-
+//Application Routes
 app.use('/api/v1', router);
 
+//Base route
 app.get('/', (req: Request, res: Response) => {
-  sendResponse(res, {
-    success: true,
-    message: 'Server is successfully running 🏃‍♀️‍➡️🏃‍♀️‍➡️🏃‍♀️‍➡️',
-    statusCode: 200,
-    data: null,
+  res.json({
+    status: true,
+    message: 'Portfolio Server Live ⚡',
   });
 });
 
-app.use(globalErrorHandler);
+// Use the Not Found Middleware
 app.use(notFound);
+// Use the Global Error Handler
+app.use(globalErrorHandler);
 
 export default app;

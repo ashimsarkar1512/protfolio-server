@@ -4,9 +4,9 @@ import jwt, { JwtPayload } from 'jsonwebtoken'
 
 import status from 'http-status'
 import catchAsync from './catchAsync'
+import { UserModel } from '../modules/user/user.schema'
 import AppError from '../errors/AppError'
-import config from '../config'
-
+import { server_config } from '../config/server.config'
 
 
 const auth = () => {
@@ -18,7 +18,7 @@ const auth = () => {
     }
     const decoded = jwt.verify(
       token,
-      config.jwt_access_secret as string
+      server_config. jwt_access_secret as string
     ) as JwtPayload
 
     const { email, iat } = decoded
