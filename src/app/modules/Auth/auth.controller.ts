@@ -10,7 +10,7 @@ const registerNewUser = catchAsync(async (req, res) => {
         success: true,
         message: "User Registered Successfully",
         statusCode: status.CREATED,
-        data: result
+        data: result 
     })
 })
 const loginUser = catchAsync(async (req, res) => {
