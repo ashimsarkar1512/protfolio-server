@@ -1,2 +1,15 @@
 
 .env
+node_modules
+dist        
+coverage
+logs
+*.log
+*.tsbuildinfo
+.DS_Store
+.vscode
+.idea
+
+# Optional: Ignore build artifacts
+build
+
