@@ -1,4 +1,4 @@
-import authRoute from '../modules/auth/auth.route'
+import authRoute from '../modules/Auth/auth.route'
 import blogRouter from '../modules/blog/blog.route'
 import messageRoute from '../modules/message/message.route'
 

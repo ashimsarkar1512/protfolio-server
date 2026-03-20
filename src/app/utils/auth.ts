@@ -18,7 +18,7 @@ const auth = () => {
     }
     const decoded = jwt.verify(
       token,
-      server_config. jwt_access_secret as string
+      server_config.jwt_access_secret as string
     ) as JwtPayload
 
     const { email, iat } = decoded

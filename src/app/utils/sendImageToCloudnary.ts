@@ -1,12 +1,12 @@
 import { UploadApiResponse, v2 as cloudinary } from "cloudinary";
 import fs from "fs";
 import multer from "multer";
-import config from "../config/server.config";
+import { server_config } from "../config/server.config";
 
 cloudinary.config({
-  cloud_name: config.cloudinary_cloud_name,
-  api_key: config.cloudinary_api_key,
-  api_secret: config.cloudinary_api_secret,
+  cloud_name: server_config.cloudinary_cloud_name,
+  api_key: server_config.cloudinary_api_key,
+  api_secret: server_config.cloudinary_api_secret,
 });
 
 export const sendImageToCloudinary = (

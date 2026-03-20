@@ -1,10 +1,11 @@
 import { Router } from 'express';
-import { authControllers } from './auth.controller';
+
 
 
 import auth from '../../utils/auth';
 import { userValidations } from '../user/user.validation';
 import authSchemaValidation from '../../utils/authSchemaValidation';
+import { authControllers } from '../Auth/auth.controller';
 
 const authRoute = Router();
 
