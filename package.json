@@ -4,10 +4,11 @@
   "main": "index.js",
   "scripts": {
     "start:prod": "node ./dist/server.js",
-    "start:dev": "ts-node-dev --respawn --transpile-only src/server.ts",
+    "start:dev": "node -r ts-node/register/transpile-only src/server.ts",
     "build": "tsc",
-    "lint": "eslint src --ignore-path .eslintignore --ext .ts",
-    "lint:fix": "npx eslint src --fix",
+    "typecheck": "tsc --noEmit",
+    "lint": "npm run typecheck",
+    "lint:fix": "npm run typecheck",
     "prettier": "prettier --ignore-path .gitignore --write \"./src/**/*.+(js|ts|json)\"",
     "prettier:fix": "npx prettier --write src",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -19,7 +20,6 @@
   "dependencies": {
     "bcrypt": "^6.0.0",
     "cloudinary": "^1.41.0",
-    "node-fetch": "^3.3.2",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
     "dotenv": "^17.2.1",
@@ -28,8 +28,9 @@
     "jsonwebtoken": "^9.0.2",
     "mongodb": "^7.0.0",
     "mongoose": "^8.17.0",
-    "multer": "^2.0.2",
+    "multer": "^2.1.1",
     "multer-storage-cloudinary": "^4.0.0",
+    "node-fetch": "^3.3.2",
     "zod": "^4.0.14"
   },
   "devDependencies": {

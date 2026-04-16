@@ -12,7 +12,6 @@ import { TErrorSources } from "../interface/error";
 import { server_config } from "../config/server.config";
 
 const globalErrorHandler: ErrorRequestHandler = (err, req, res, next) => {
-  console.log(err.statusCode);
   //setting default values
   let statusCode = 500;
   let message = "Something went wrong!";
@@ -67,7 +66,7 @@ const globalErrorHandler: ErrorRequestHandler = (err, req, res, next) => {
     success: false,
     message,
     errorSources,
-    err,
+    ...(server_config.NODE_ENV === "development" ? { err } : {}),
     stack: server_config.NODE_ENV === "development" ? err?.stack : null,
   });
 };

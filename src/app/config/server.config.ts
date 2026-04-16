@@ -3,6 +3,7 @@ export const server_config={
   NODE_ENV: process.env.NODE_ENV,
   port: process.env.PORT,
   database_url: process.env.DATABASE_URL,
+  mongodb_dns_servers: process.env.MONGODB_DNS_SERVERS,
   bcrypt_salt_rounds: process.env.BCRYPT_SALT_ROUNDS,
   user_email: process.env.USER_EMAIL as string,           
   user_password: process.env.USER_PASSWORD as string,     
@@ -14,4 +15,5 @@ export const server_config={
   cloudinary_cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
   cloudinary_api_key: process.env.CLOUDINARY_API_KEY,
   cloudinary_api_secret: process.env.CLOUDINARY_API_SECRET,
+  cors_origins: process.env.CORS_ORIGINS,
 };

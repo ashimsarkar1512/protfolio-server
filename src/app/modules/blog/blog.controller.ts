@@ -3,13 +3,19 @@ import sendResponse from '../../utils/sendResponse'
 import { TBlog } from './blog.interface'
 import { blogSerices } from './blog.service'
 import status from 'http-status'
+import {
+  getOptionalUploadedFilePath,
+  getRequiredParam
+} from '../../utils/requestValue'
 
 // create a new blog
 const createABlog = catchAsync(async (req, res) => {
   const blogInfo: TBlog = req?.body
+  const blogImage = getOptionalUploadedFilePath(req)
+
   const result = await blogSerices.createABlogIntoDB({
     ...blogInfo,
-    blogImage: req?.file?.path
+    blogImage
   })
   sendResponse(res, {
     success: true,
@@ -31,11 +37,11 @@ const getAllBlogs = catchAsync(async (req, res) => {
 })
 
 const getSingleBlog = catchAsync(async (req, res) => {
-  const { id } = req.params
+  const id = getRequiredParam(req, 'id')
   const result = await blogSerices.getSingleBlogFromDB(id)
   sendResponse(res, {
     success: true,
-    message: 'Blogs is retrieved successfully',
+    message: 'Blog retrieved successfully',
     data: result,
     statusCode: status.OK
   })
@@ -44,10 +50,13 @@ const getSingleBlog = catchAsync(async (req, res) => {
 // update blog
 
 const updateABlog = catchAsync(async (req, res) => {
-  if (req?.file?.path) {
-    req.body.blogImage = req.file.path
+  const id = getRequiredParam(req, 'id')
+  const blogImage = getOptionalUploadedFilePath(req)
+
+  if (blogImage) {
+    req.body.blogImage = blogImage
   }
-  const result = await blogSerices.updateBlogIntoDB(req.params.id, req.body)
+  const result = await blogSerices.updateBlogIntoDB(id, req.body)
   sendResponse(res, {
     success: true,
     message: 'Blog updated successfully',
@@ -58,7 +67,8 @@ const updateABlog = catchAsync(async (req, res) => {
 
 //delete blog
 const deleteBlog = catchAsync(async (req, res) => {
-  await blogSerices.deleteBlogFromDB(req.params.id)
+  const id = getRequiredParam(req, 'id')
+  await blogSerices.deleteBlogFromDB(id)
   sendResponse(res, {
     success: true,
     message: 'Blog deleted successfully',

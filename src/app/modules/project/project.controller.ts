@@ -3,15 +3,20 @@ import sendResponse from '../../utils/sendResponse'
 import status from 'http-status'
 import { TProject } from './project.interface'
 import { projectServices } from './project.service'
+import {
+  getOptionalUploadedFilePath,
+  getRequiredParam
+} from '../../utils/requestValue'
 
 
 
 
 const createProject = catchAsync(async (req, res) => {
   const projectInfo: TProject = req?.body
+  const projectImage = getOptionalUploadedFilePath(req)
   const result = await projectServices.saveProjectOnDB({
     ...projectInfo,
-    projectImage: req?.file?.path
+    projectImage
   })
   sendResponse(res, {
     success: true,
@@ -31,23 +36,23 @@ const getAllProject = catchAsync(async (req, res) => {
   })
 })
 const getSingleProject = catchAsync(async (req, res) => {
-  const { id } = req?.params
+  const id = getRequiredParam(req, 'id')
   const result = await projectServices.getSingleProjectFromDB(id)
   sendResponse(res, {
     success: true,
-    message: 'Project retirve successfully',
+    message: 'Project retrieved successfully',
     data: result,
     statusCode: status.OK
   })
 })
 const updateProject = catchAsync(async (req, res) => {
-  if (req?.file?.path) {
-    req.body.projectImage = req.file.path
+  const id = getRequiredParam(req, 'id')
+  const projectImage = getOptionalUploadedFilePath(req)
+
+  if (projectImage) {
+    req.body.projectImage = projectImage
   }
-  const result = await projectServices.updateProjectIntoDb(
-    req.params.id,
-    req.body
-  )
+  const result = await projectServices.updateProjectIntoDb(id, req.body)
   sendResponse(res, {
     success: true,
     message: 'Project updated successfully',
@@ -57,7 +62,8 @@ const updateProject = catchAsync(async (req, res) => {
 })
 
 const deleteProject = catchAsync(async (req, res) => {
-  await projectServices.deleteProjectFromDB(req.params.id)
+  const id = getRequiredParam(req, 'id')
+  await projectServices.deleteProjectFromDB(id)
   sendResponse(res, {
     success: true,
     message: 'Project deleted successfully',
@@ -66,7 +72,7 @@ const deleteProject = catchAsync(async (req, res) => {
   })
 })
 const add_featured_project = catchAsync(async (req, res) => {
-  const { id } = req?.params
+  const id = getRequiredParam(req, 'id')
   const result = await projectServices.add_featured_project_into_db(id)
   sendResponse(res, {
     success: true,

@@ -1,6 +1,7 @@
 import catchAsync from "../../utils/catchAsync";
 import sendResponse from "../../utils/sendResponse";
 import { skill_services } from "./skill.service";
+import { getRequiredParam } from "../../utils/requestValue";
 
 
 const create_skill = catchAsync(async (req, res) => {
@@ -13,7 +14,7 @@ const create_skill = catchAsync(async (req, res) => {
     })
 })
 const update_skill = catchAsync(async (req, res) => {
-    const { id } = req?.params
+    const id = getRequiredParam(req, 'id')
     const result = await skill_services.update_skill_into_db(id, req.body)
     sendResponse(res, {
         success: true,
@@ -23,7 +24,7 @@ const update_skill = catchAsync(async (req, res) => {
     })
 })
 const delete_skill = catchAsync(async (req, res) => {
-    const { id } = req?.params
+    const id = getRequiredParam(req, 'id')
     await skill_services.delete_skill_into_db(id)
     sendResponse(res, {
         success: true,
@@ -42,7 +43,7 @@ const get_all_skill = catchAsync(async (req, res) => {
     })
 })
 const get_one_skill = catchAsync(async (req, res) => {
-    const { id } = req?.params
+    const id = getRequiredParam(req, 'id')
     const result = await skill_services.get_one_skill_from_db(id)
     sendResponse(res, {
         success: true,

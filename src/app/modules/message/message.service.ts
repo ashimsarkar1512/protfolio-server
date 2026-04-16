@@ -7,12 +7,16 @@ const saveMessageIntoDB = async (payload: TMessage) => {
 }
 
 const getAllMessageFromDB = async () => {
-      const result = await MessageModel.find()
+      const result = await MessageModel.find().sort({ createdAt: -1 })
       return result
 }
 const mark_as_red_into_db = async (id: string) => {
-      await MessageModel.findByIdAndUpdate(id, { isReded: true })
-      return "Message reded"
+      const result = await MessageModel.findByIdAndUpdate(
+            id,
+            { isRead: true, isReded: true },
+            { new: true }
+      )
+      return result
 }
 
 export const messageServices = {

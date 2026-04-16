@@ -12,6 +12,8 @@ const messageSchema = new Schema<TMessage>({
   },
   senderEmail: { type: String, required: true },
   senderName: { type: String, required: true },
+  // keep both keys for backward compatibility with existing data
+  isRead: { type: Boolean, default: false },
   isReded: { type: Boolean, default: false }
 }, { timestamps: true })
 
