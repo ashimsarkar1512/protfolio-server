@@ -1,15 +1,27 @@
-
+# Environment
 .env
+.env.*
+
+# Dependencies
 node_modules
-dist        
+
+# Build outputs
+dist
+build
 coverage
+
+# Logs
 logs
 *.log
+
+# TypeScript
 *.tsbuildinfo
+
+# OS files
 .DS_Store
-.vscode
+
+# Editor
 .idea
-
-# Optional: Ignore build artifacts
-build
-
+temp_auto_push.bat
+temp_interactive_push.bat
+.gitignore
