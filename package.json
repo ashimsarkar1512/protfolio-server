@@ -5,7 +5,7 @@
   "scripts": {
     "start:prod": "node ./dist/server.js",
     "start:dev": "node -r ts-node/register/transpile-only src/server.ts",
-    "build": "tsc",
+    "build": "node api.js && tsc",
     "typecheck": "tsc --noEmit",
     "lint": "npm run typecheck",
     "lint:fix": "npm run typecheck",
